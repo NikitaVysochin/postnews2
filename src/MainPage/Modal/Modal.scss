@@ -18,6 +18,23 @@
     width: 250px;
     height: 400px;
     justify-content: space-evenly;
+
+    .main-tags {
+      display: flex;
+
+      .container-tag {
+        display: flex;
+        border: 2px solid rgb(23, 177, 30);
+        margin-right: 3px;
+        margin-left: 2px;
+
+        .but-X {
+          cursor: pointer;
+          background-color: red;
+          margin-left: 4px;
+        }
+      }
+    }
   
     .save-button {
       width: 100px;

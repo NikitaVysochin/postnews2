@@ -60,5 +60,22 @@
     h2 {
       text-align: center;
     }
+
+    .main-tags {
+      display: flex;
+
+      .container-tag {
+        display: flex;
+        border: 1px solid greenyellow;
+        margin-right: 3px;
+        margin-left: 2px;
+
+        .but-X {
+          cursor: pointer;
+          background-color: red;
+          margin-left: 4px;
+        }
+      }
+    }
   }
 }

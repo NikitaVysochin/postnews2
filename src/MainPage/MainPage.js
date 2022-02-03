@@ -40,8 +40,8 @@ const MainPage = () => {
         return <div className='post-container' key={index}>
           <h2>{elem.title}</h2>
           <p>{elem.text}</p>
-          <div>{elem.link}</div>
-          <div>{elem.tags}</div>
+          <div><a href='elem.link'>{elem.link}</a></div>
+          <div>{elem.tags.map(elem=>{return <span>{elem},</span>})}</div>
           <div>{moment(elem.date).format('MMMM Do YYYY, h:mm:ss a')}</div>
         </div>
         })}
