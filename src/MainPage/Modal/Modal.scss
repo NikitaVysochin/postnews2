@@ -1,0 +1,51 @@
+.box {
+  margin: auto;
+  margin-top: 5%;
+  height: 400px;
+  width: 70%;
+  position: 'absolute';
+  background-color: white;
+  border: '2px solid #000';
+  top: '50%';
+  left: '50%';
+  transform: 'translate(-50%, -50%)';
+  width: 400px;
+
+  .modal-main-container {
+    margin: auto auto;
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 400px;
+    justify-content: space-evenly;
+
+    .main-tags {
+      display: flex;
+
+      .container-tag {
+        display: flex;
+        border: 2px solid rgb(23, 177, 30);
+        margin-right: 3px;
+        margin-left: 2px;
+
+        .but-X {
+          cursor: pointer;
+          background-color: red;
+          margin-left: 4px;
+        }
+      }
+    }
+  
+    .save-button {
+      width: 100px;
+      height: 45px;
+      border-radius: 4px;
+      background-color: red;
+      cursor: pointer;
+      text-align: center;
+      line-height: 45px;
+      margin: 0 auto;
+    }
+}
+}
+
