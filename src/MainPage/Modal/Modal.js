@@ -1,66 +1,63 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import './Modal.scss';
 
-export default function BasicModal({ date, setArr, setOpen, arr, open }) {
-  const handleClose = () => setOpen(false);
-  const [title, setTitle] = useState('');
-  const [news, setNews] = useState('');
-  const [link, setLink] = useState('');
-  const [tags, setTags] = useState('');
+export default function BasicModal({ addPost, handleClose, open }) {
+  const [inputs, setInputs] = useState({});
+  const [errors,setErrors]= useState({
+    title: '',
+    news: '',
+    link: ''
+  })
+  const [tagInp, setTagInp] = useState('');
   const [arrTags, setArrTags] = useState([]);
 
+  const changeInp = (e, pattern, errorMessage) => {
+    if(e.target.name=='link'){
+      if(!pattern.test(e.target.value)){
+        setErrors({...errors, [e.target.name]: e.target.value});
+      } 
+    }
+    if(e.target.name=='title' || e.target.name=='news') {
+        setErrors({...errors, [e.target.name]: e.target.value});
+    }
+    setInputs({...inputs, [e.target.name]: e.target.value})
+  }
+  
   const delTag = (index) => {
     setArrTags([...arrTags.slice(0,index), ...arrTags.slice(index+1)]);
   }
 
   const Tags = (e) => {
     if (e.keyCode === 13) {
-      setArrTags([...arrTags, tags]);
-      setTags('')
+      setArrTags([...arrTags, tagInp]);
+      setTagInp('')
     }
-    console.log('arrTags', arrTags , 'e.keyCode', e.keyCode);
-  }
-
-  const Link = (e) => {
-    setLink(e.target.value);
-  }
-
-  const isUrl = (str) => /^((https?|ftp)\:\/\/)?([a-z0-9]{1})((\.[a-z0-9-])|([a-z0-9-]))*\.([a-z]{2,6})(\/?)$/.test(str) ;
-  
-  const Save = (date) => {
-
-    if (title.trim()!=='' &&
-        news.trim()!=='' && 
-        link.trim()=='' ||
-        /*link.split('').slice(0,4).join('')=='http' &&
-        link.split('').slice(-3).join('')=='com'*/
-        isUrl(link)
-        ) {
-      setArr([...arr, {
-        title,
-        text: news,
-        link: link,
-        tags: arrTags,
-        date: new Date()
-      }]);
-
-    setTitle('');
-    setNews('');
-    setLink('');
-    setTags('');
-    handleClose();
-  } 
-  if(link.trim()!==''){
-    if (isUrl(link)==false) alert('введите корректный email');
-  }
-  if (title.trim()=='' || news.trim()=='') alert('заполните все поля')
-  console.log(link.split('').slice(-3).join(''));
-  
-  setArrTags([]);
   }
   
+  const Save = () => {
+    if(errors.title.trim() == '' || errors.news.trim() == '') {
+      alert('empty requared field');
+      if(errors.link!==''){
+        return alert("ссылка некорректна");
+      } 
+    } else {
+      addPost(inputs);
+      handleClose();
+      setArrTags([]);
+      setInputs({})
+      setErrors({
+        title: '',
+        news: '',
+      });
+    }
+  }
+
+  useEffect(()=>{
+    setInputs({...inputs, tags: arrTags})
+  },[arrTags])
+
   return (
     <div>
       <Modal
@@ -74,26 +71,46 @@ export default function BasicModal({ date, setArr, setOpen, arr, open }) {
             <div className='modal-header'>
               <label>введите заголовок *</label>
             <input 
-              value={title} 
-              onChange={(e)=>{setTitle(e.target.value)}}
-              required
+              name='title'
+              value={setInputs.title} 
+              onChange={(e)=>changeInp(e,'klkl')}
+              
             />
             </div>
             <div className='modal-news'>
               <label>введите текст новости *</label>
-            <textarea value={news} onChange={(e)=>{setNews(e.target.value)}}/>
+            <textarea 
+              name='news'
+              value={setInputs.news} 
+              onChange={(e)=>changeInp(e, 'news')}
+            />
             </div>
             <div className='modal-link'>
-              <label>введите ссылку (введите вначале http, а в конце com)</label>
-            <input value={link} onChange={(e)=>Link(e)}/>
+              <label>введите ссылку</label>
+            <input 
+              value={inputs.link} 
+              name='link'
+              onChange={(e)=>changeInp(e, /^((https?|ftp)\:\/\/)?([a-z0-9]{1})((\.[a-z0-9-])|([a-z0-9-]))*\.([a-z]{2,6})(\/?)$/)}
+            />
             </div>
             <div className='modal-tags'>
-              <label>введите теги</label>
-            <input value={tags} onKeyDown={(e)=>Tags(e)} onChange={(e)=>{setTags(e.target.value)}}/>
-            <div className='main-tags'>{arrTags.map((elem, index)=>{return <div key={index} className='container-tag'>{elem}<div className='but-X' onClick={()=>delTag(index)}>X</div></div>})}</div>
+              <label>введите тег и нажмите enter</label>
+              <input 
+                value={tagInp} 
+                onKeyDown={(e)=>Tags(e)} 
+                onChange={(e)=>setTagInp(e.target.value)}
+              />
+              <div className='main-tags'>
+                {arrTags.map((elem, index)=>{
+                  return <div key={index} className='container-tag'>{elem}
+                    <div className='but-X' 
+                      onClick={()=>delTag(index)}>X
+                    </div>
+                  </div>})}
+              </div>
             </div>
             <div>* - поля обязательны к заполнению</div>
-            <div className='save-button' onClick={()=>Save(title, news, link, tags, date)}>Save</div>      
+            <div className='save-button' onClick={()=>Save()}>Save</div>      
           </div>
         </Box>
       </Modal>
