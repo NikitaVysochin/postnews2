@@ -1,0 +1,19 @@
+.post-container {
+  border: 1px solid blue;
+  width: 250px;
+  height: 350px;
+  background-color: rgb(233, 55, 233);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+
+  h2 {
+    text-align: center;
+  }
+
+  .container-tags {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
