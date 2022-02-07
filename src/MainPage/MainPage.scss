@@ -14,11 +14,11 @@
     cursor: pointer;
     display: flex;
     justify-content: center;
-  }
 
-  .button-sort:hover {
-    border: 1px solid black;
-    margin: 4px auto 14px;
+    &:hover {
+      border: 1px solid black;
+      margin: 4px auto 14px;
+    }
   }
   
   .button-add {
@@ -37,8 +37,6 @@
     margin: 4px auto 14px;
   }
 }
-
-
 
 .main-container {
   margin: auto auto;

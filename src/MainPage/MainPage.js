@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
+import { useNavigate, Link } from "react-router-dom";
 import moment from "moment";
 import Modal from './Modal/Modal';
 import imgSort from '../img/sort.png';
 import imgDwn from '../img/down.png';
 import './MainPage.scss';
 
-const MainPage = () => {
+const MainPage = ({ setRoute }) => {
   const [arr, setArr] = useState([]);
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(!open);
@@ -25,7 +26,7 @@ const MainPage = () => {
   const addPost = (inputs) => {
     setArr([...arr, {...inputs, 'date': new Date(), 'id': nanoid(10)}]);
   }
-  console.log('arr', arr);
+  
   return (<>
     <Modal 
       handleClose={handleClose}
@@ -38,15 +39,23 @@ const MainPage = () => {
     </div>
     <div className='main-container'>
       {arr.map((elem, index) => {
-        return <div className='post-container' key={elem.id}>
-          <h2>{elem.title}</h2>
-          <p>{elem.news}</p>
-          <div><a href='elem.link'>{elem.link}</a></div>
-          <div className='container-tags'>{elem.tags.map(elem=>{return <span>{elem},</span>})}</div>
-          <div>{moment(elem.date).format('LTS')}</div>
-        </div>
-        })}
-    </div>
+        return <>
+          <Link to={`/post/${elem.id}`} onClick={()=>setRoute(elem)} >
+            <div 
+              className='post-container' 
+              key={elem.id}
+            >
+              <h2>{elem.title}</h2>
+              <p>{elem.news}</p>
+              <div><a href='elem.link'>{elem.link}</a></div>
+              <div className='container-tags'>{elem.tags.map(elem=>{return <span>{elem},</span>})}</div>
+              <div>{moment(elem.date).format('LTS')}</div>
+            </div>
+          </Link>
+        </>
+        
+          })}
+      </div>
   </>);
 }
 
