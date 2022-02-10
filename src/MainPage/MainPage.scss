@@ -1,3 +1,19 @@
+.filtr {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+
+  p {
+    margin-right: 10px;
+  }
+
+  input {
+    border-radius: 8px;
+    width: 250px;
+    font-size: 20px;
+  }
+}
+
 .button-container {
   margin: auto auto;
   display: flex;
@@ -46,16 +62,17 @@
   justify-content: space-evenly;
 
   .post-container {
-    border: 1px solid blue;
+    border-radius: 6px;
     width: 250px;
     height: 350px;
-    background-color: rgb(143, 180, 174);
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 24px 0px rgba(34, 60, 80, 0.2);
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     margin-bottom: 10px;
 
-    h2 {
+    h2, p, div {
       text-align: center;
     }
 

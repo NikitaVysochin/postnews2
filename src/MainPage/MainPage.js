@@ -7,27 +7,39 @@ import Modal from './Modal/Modal';
 import imgSort from '../img/sort.png';
 import imgDwn from '../img/down.png';
 import './MainPage.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPostAction } from '../Redux/Actions';
+  
 
-const MainPage = ({ setRoute }) => {
-  const [arr, setArr] = useState([]);
+const MainPage = () => {
+  const posts = useSelector((store)=>store.posts)
+  const dispatch = useDispatch()
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(!open);
   const handleOpen = () => setOpen(true);
   const [check, setCheck] = useState(false);
-  const id = `f${(+new Date).toString(16)}`;
+  const [inpFiltr, setInpFiltr] = useState('');
+  console.log(posts,'posts');
 
   const Sort = () => {
-    arr.sort((a, b) => (a.date < b.date ? -1 : 1));
-    if (check === false) arr.reverse();
-    setArr([...arr]);
+    posts.sort((a, b) => (a.date < b.date ? -1 : 1));
+    if (check === false) posts.reverse();
     setCheck(!check)
   }
 
   const addPost = (inputs) => {
-    setArr([...arr, {...inputs, 'date': new Date(), 'id': nanoid(10)}]);
-  }
-  
+    dispatch(addPostAction({...inputs, 'date': new Date(), 'id': nanoid(10)}))
+   }
+
+  const Filtr = (el) => {
+    return el.title.toLowerCase().indexOf(inpFiltr.toLowerCase()) > -1 || el.news.toLowerCase().indexOf(inpFiltr.toLowerCase()) > -1;
+}
+
   return (<>
+    <div className='filtr'>
+      <p>введите фильтр</p>
+      <input onChange={(e)=>setInpFiltr(e.target.value)} ></input>
+    </div>
     <Modal 
       handleClose={handleClose}
       addPost={addPost} 
@@ -38,9 +50,10 @@ const MainPage = ({ setRoute }) => {
       <div className='button-add' onClick={handleOpen}>Add</div>
     </div>
     <div className='main-container'>
-      {arr.map((elem, index) => {
+      {posts.filter((el)=> Filtr(el)) 
+      .map((elem, index) => {
         return <>
-          <Link to={`/post/${elem.id}`} onClick={()=>setRoute(elem)} >
+          <Link to={`/post/${elem.id}`} >
             <div 
               className='post-container' 
               key={elem.id}
@@ -53,7 +66,6 @@ const MainPage = ({ setRoute }) => {
             </div>
           </Link>
         </>
-        
           })}
       </div>
   </>);

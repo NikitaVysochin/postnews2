@@ -39,10 +39,11 @@ export default function BasicModal({ addPost, handleClose, open }) {
   const Save = () => {
     if(errors.title.trim() == '' || errors.news.trim() == '') {
       alert('empty requared field');
-      if(errors.link!==''){
-        return alert("ссылка некорректна");
+    }
+     else { if(errors.link!==''){
+         alert("ссылка некорректна");
       } 
-    } else {
+     else {
       addPost(inputs);
       handleClose();
       setArrTags([]);
@@ -50,8 +51,9 @@ export default function BasicModal({ addPost, handleClose, open }) {
       setErrors({
         title: '',
         news: '',
+        link: ''
       });
-    }
+    }}
   }
 
   useEffect(()=>{

@@ -4,18 +4,18 @@ import OpenPost from './OpenPost/OpenPost';
 import './App.css';
 import { useState } from 'react';
 
+
 function App() {
-  const [route, setRoute] = useState({});
   
   return (<>
   <Routes>
     <Route 
-      path={`/post/${route.id}`} 
-      element={<OpenPost route={route} />} 
+      path={`/post/:id`} 
+      element={<OpenPost />} 
     />
     <Route 
       path='/main' 
-      element={<MainPage setRoute={setRoute} />} 
+      element={<MainPage  />} 
     />
     <Route 
       path='/' 
