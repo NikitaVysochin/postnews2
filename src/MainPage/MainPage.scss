@@ -1,0 +1,95 @@
+.filtr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0  0 15px 0;
+  padding: 4px 10px;
+  width: 100%;
+  background: #ddd;
+  position: sticky;
+  top: 0;
+  &_block{
+    display: flex;
+    gap:5px;
+    height: 100%;
+  }
+  p {
+    margin-right: 10px;
+  }
+
+  input {
+    border-radius: 8px;
+    width: 250px;
+    font-size: 20px;
+  }
+}
+
+ 
+
+  .button-sort {
+    width: 100px;
+    margin: 5px auto 15px;
+    height: 50px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    img{
+      max-height: 100%;
+      max-width: 100%;
+    }
+    &:hover {
+      border: 1px solid black;
+      margin: 4px auto 14px;
+    }
+  }
+  
+  .button-add {
+    width: 100px;
+    margin: 5px auto 15px;
+    height: 50px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 50px;
+    background-color: rgb(253, 55, 138);
+    cursor: pointer;
+  }
+
+  .button-add:hover {
+    border: 1px solid black;
+    margin: 4px auto 14px;
+  }
+ 
+
+.main-container {
+  margin-inline: auto;
+  width: 90%; 
+  display: grid;
+  padding: 5px;
+  grid-template-columns: repeat(auto-fill, minmax(250px,1fr));  
+  gap: 20px 10px;   
+  @media (max-width:600px) {
+   place-items: center;
+  }
+  .post-container {
+    border-radius: 6px; 
+    background-color: rgb(255, 255, 255);
+    box-shadow: 1px  2px  5px   rgba(0,0,0, 0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;  
+    text-decoration: none;
+
+    h2, p, div {
+      text-align: center;
+      
+    }
+
+    .container-tags {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+}
